@@ -7,6 +7,10 @@ pub mod memory;
 pub mod program;
 pub mod stack;
 
+/// Virtual Machine (VM) designed for 32-bit architecture operations.
+/// 
+/// # Generics:
+/// - `T`: Represents the data type for the stack and CPU operations, e.g., `i32`.
 pub struct VM<T> {
     stack: stack::Stack<T>,
     memory: memory::Memory,
@@ -14,8 +18,16 @@ pub struct VM<T> {
     steps: u128,
 }
 
-/// Implementation of the VM for the 32-bit architecture
+/// Implementation specific for 32-bit integers.
 impl VM<i32> {
+	/// Constructs a new instance of the VM.
+    ///
+    /// # Parameters:
+    /// - `stack_capacity`: Maximum number of elements the stack can hold.
+    /// - `memory_size`: Size of the memory in bytes.
+    ///
+    /// # Returns:
+    /// A new instance of `VM<i32>`
     pub fn new(stack_capacity: usize, memory_size: usize) -> Self {
         Self {
             stack: stack::Stack::<i32>::new(stack_capacity),
@@ -25,6 +37,14 @@ impl VM<i32> {
         }
     }
 
+	/// Runs the VM with a given program.
+    ///
+    /// # Parameters:
+    /// - `program`: Byte array representing the machine code to execute.
+    ///
+    /// # Returns:
+    /// - `Ok(u128)`: Total number of steps executed upon successful completion.
+    /// - `Err(VmError)`: Error if an issue occurred during execution.
     pub fn run(&mut self, program: &[u8]) -> Result<u128, error::VmError> {
         self.steps = 0;
         self.cpu.init();
