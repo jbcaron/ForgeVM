@@ -3,8 +3,10 @@ pub struct Program {
 }
 
 impl Program {
-    pub fn new(code: Vec<u8>) -> Self {
-        Self { code }
+    pub fn new(code: &[u8]) -> Self {
+        Program {
+            code: code.to_vec(),
+        }
     }
     pub fn slice_from(&self, start: usize) -> &[u8] {
         &self.code[start..]

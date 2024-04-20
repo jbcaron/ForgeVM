@@ -11,9 +11,13 @@ impl Memory {
         }
     }
 
+    pub fn clear(&mut self) {
+        self.data.iter_mut().for_each(|x| *x = 0);
+    }
+
     pub fn read<T>(&self, address: usize) -> Result<T>
     where
-        T: Copy + std::fmt::Display,
+        T: Copy,
     {
         if address + std::mem::size_of::<T>() > self.data.len() {
             return Err(VmError::MemoryOutOfBounds {
@@ -48,6 +52,10 @@ impl Memory {
         }
 
         Ok(())
+    }
+
+    pub fn capacity(&self) -> usize {
+        self.data.len()
     }
 }
 

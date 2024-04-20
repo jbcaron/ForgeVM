@@ -6,7 +6,7 @@ pub enum VmError {
     MemoryNotAligned { address: usize, size: usize },
     InvalidOpcode { opcode: u8 },
     InvalidInstruction,
-    RegisterOutOfBounds { register: u8 },
+    InvalidRegister { register: u8 },
     DivisionByZero,
     StackUnderflow,
     StackOverflow,
@@ -19,24 +19,24 @@ impl std::fmt::Display for VmError {
             VmError::MemoryOutOfBounds { address, size } => {
                 write!(
                     f,
-                    "Memory access out of bounds at address: {} with size: {}",
+                    "Memory access out of bounds at address: 0x{:x} with size: {}",
                     address, size
                 )
             }
             VmError::MemoryNotAligned { address, size } => {
                 write!(
                     f,
-                    "Memory access not aligned at address: {} with size: {}",
+                    "Memory access not aligned at address: 0x{:x} with size: {}",
                     address, size
                 )
             }
             VmError::InvalidOpcode { opcode } => {
-                write!(f, "Invalid opcode encountered: 0x{:02X}", opcode)
+                write!(f, "Invalid opcode encountered: 0x{:02x}", opcode)
             }
             VmError::InvalidInstruction => {
                 write!(f, "Invalid instruction encountered")
             }
-            VmError::RegisterOutOfBounds { register } => {
+            VmError::InvalidRegister { register } => {
                 write!(f, "Register out of bounds: {}", register)
             }
             VmError::DivisionByZero => {
