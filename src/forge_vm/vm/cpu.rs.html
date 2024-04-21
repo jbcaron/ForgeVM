@@ -250,6 +250,10 @@
 <a href="#248" id="248">248</a>
 <a href="#249" id="249">249</a>
 <a href="#250" id="250">250</a>
+<a href="#251" id="251">251</a>
+<a href="#252" id="252">252</a>
+<a href="#253" id="253">253</a>
+<a href="#254" id="254">254</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">super</span>::error::{<span class="prelude-ty">Result </span><span class="kw">as </span>VmResult, VmError};
 <span class="kw">use </span><span class="kw">super</span>::hardware_config::REGISTERS_COUNT;
 <span class="kw">use </span><span class="kw">super</span>::instructions::Instruction;
@@ -262,9 +266,13 @@
 /// The CPU can execute instructions and interact with memory and the stack.
 /// The CPU is generic over the data type used for the registers.
 </span><span class="kw">pub struct </span>CPU&lt;T&gt; {
-    registers: [T; REGISTERS_COUNT <span class="kw">as </span>usize],
-    status_flags: StatusFlags,
-    pc: usize,
+    <span class="doccomment">/// The registers of the CPU.
+    /// ***Note:*** REGISTERS_COUNT is defined in hardware_config.rs
+    </span>registers: [T; REGISTERS_COUNT <span class="kw">as </span>usize],
+    <span class="doccomment">/// The status flags of the CPU.
+    </span>status_flags: StatusFlags,
+    <span class="doccomment">/// The program counter (PC) of the CPU.
+    </span>pc: usize,
 }
 
 <span class="doccomment">/// Implementation of the CPU for the 32-bit architecture
