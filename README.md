@@ -2,6 +2,10 @@
 
 # ForgeVM: _A virtual machine implemented in Rust_
 
+[![CI](https://github.com/jbcaron/ForgeVM/actions/workflows/rust.yml/badge.svg)](https://github.com/jbcaron/ForgeVM/actions/workflows/rust.yml)
+![Github licence](https://img.shields.io/github/license/jbcaron/ForgeVM)
+![GitHub tag](https://img.shields.io/github/v/tag/jbcaron/ForgeVm)
+
 Welcome to ForgeVM, a virtual machine (VM) implemented in Rust, designed to be robust, safe, and efficient. ForgeVM is an educational project that provides a platform for understanding the inner workings of a virtual machine, including its instruction set, memory management, and execution flow.
 The core components include a dynamically sized stack, a configurable memory module, and a CPU that interprets and executes a set of defined instructions.
 
