@@ -138,6 +138,21 @@
 <a href="#136" id="136">136</a>
 <a href="#137" id="137">137</a>
 <a href="#138" id="138">138</a>
+<a href="#139" id="139">139</a>
+<a href="#140" id="140">140</a>
+<a href="#141" id="141">141</a>
+<a href="#142" id="142">142</a>
+<a href="#143" id="143">143</a>
+<a href="#144" id="144">144</a>
+<a href="#145" id="145">145</a>
+<a href="#146" id="146">146</a>
+<a href="#147" id="147">147</a>
+<a href="#148" id="148">148</a>
+<a href="#149" id="149">149</a>
+<a href="#150" id="150">150</a>
+<a href="#151" id="151">151</a>
+<a href="#152" id="152">152</a>
+<a href="#153" id="153">153</a>
 </pre></div><pre class="rust"><code><span class="kw">pub mod </span>cpu;
 <span class="kw">pub mod </span>decoder;
 <span class="kw">pub mod </span>error;
@@ -168,6 +183,13 @@
     ///
     /// # Returns:
     /// A new instance of `VM&lt;i32&gt;`
+    ///
+    /// # Example:
+    /// ```
+    /// // Create a new VM with a stack capacity of 1024 elements and a memory size of 1024 bytes.
+    /// use forge_vm::VM;
+    /// let mut vm = VM::&lt;i32&gt;::new(1024, 1024);
+    /// ```
     </span><span class="kw">pub fn </span>new(stack_capacity: usize, memory_size: usize) -&gt; <span class="self">Self </span>{
         <span class="macro">log::debug!</span>(<span class="string">"Creating new VM..."</span>);
         <span class="self">Self </span>{
@@ -186,6 +208,14 @@
     /// # Returns:
     /// - `Ok(u128)`: Total number of steps executed upon successful completion.
     /// - `Err(VmError)`: Error if an issue occurred during execution.
+    ///
+    /// # Example:
+    /// ```
+    /// use forge_vm::VM;
+    /// let mut vm = VM::&lt;i32&gt;::new(1024, 1024); // Create a new VM
+    /// let program = vec![0x00, 0x00, 0xff]; // NOP, NOP, HLT
+    /// assert_eq!(vm.run(&amp;program), Ok(3));
+    /// ```
     </span><span class="kw">pub fn </span>run(<span class="kw-2">&amp;mut </span><span class="self">self</span>, program: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="prelude-ty">Result</span>&lt;u128, error::VmError&gt; {
         <span class="macro">log::info!</span>(<span class="string">"Running program..."</span>);
         <span class="self">self</span>.steps = <span class="number">0</span>;

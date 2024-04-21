@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["read_i32","read_u32","register_address"],"struct":["Decoder"]};

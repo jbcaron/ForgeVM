@@ -127,9 +127,13 @@
 <a href="#125" id="125">125</a>
 <a href="#126" id="126">126</a>
 <a href="#127" id="127">127</a>
+<a href="#128" id="128">128</a>
+<a href="#129" id="129">129</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">super</span>::error::{<span class="prelude-ty">Result</span>, VmError};
 
-<span class="kw">pub struct </span>Stack&lt;T&gt; {
+<span class="doccomment">/// The stack structure used by the VM.
+/// The stack has a fixed capacity and can store any type.
+</span><span class="kw">pub struct </span>Stack&lt;T&gt; {
     data: Vec&lt;T&gt;,
     capacity: usize,
 }

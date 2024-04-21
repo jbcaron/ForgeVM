@@ -219,13 +219,49 @@
 <a href="#217" id="217">217</a>
 <a href="#218" id="218">218</a>
 <a href="#219" id="219">219</a>
+<a href="#220" id="220">220</a>
+<a href="#221" id="221">221</a>
+<a href="#222" id="222">222</a>
+<a href="#223" id="223">223</a>
+<a href="#224" id="224">224</a>
+<a href="#225" id="225">225</a>
+<a href="#226" id="226">226</a>
+<a href="#227" id="227">227</a>
+<a href="#228" id="228">228</a>
+<a href="#229" id="229">229</a>
+<a href="#230" id="230">230</a>
+<a href="#231" id="231">231</a>
+<a href="#232" id="232">232</a>
+<a href="#233" id="233">233</a>
+<a href="#234" id="234">234</a>
+<a href="#235" id="235">235</a>
+<a href="#236" id="236">236</a>
+<a href="#237" id="237">237</a>
+<a href="#238" id="238">238</a>
+<a href="#239" id="239">239</a>
+<a href="#240" id="240">240</a>
+<a href="#241" id="241">241</a>
+<a href="#242" id="242">242</a>
+<a href="#243" id="243">243</a>
+<a href="#244" id="244">244</a>
+<a href="#245" id="245">245</a>
+<a href="#246" id="246">246</a>
+<a href="#247" id="247">247</a>
+<a href="#248" id="248">248</a>
+<a href="#249" id="249">249</a>
+<a href="#250" id="250">250</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">super</span>::error::{<span class="prelude-ty">Result </span><span class="kw">as </span>VmResult, VmError};
 <span class="kw">use </span><span class="kw">super</span>::hardware_config::REGISTERS_COUNT;
 <span class="kw">use </span><span class="kw">super</span>::instructions::Instruction;
 <span class="kw">use </span><span class="kw">super</span>::memory::Memory;
 <span class="kw">use </span><span class="kw">super</span>::stack::Stack;
 
-<span class="kw">pub struct </span>CPU&lt;T&gt; {
+<span class="doccomment">/// The CPU structure used by the VM.
+/// The CPU has a fixed number of registers and status flags.
+/// The CPU has a program counter (PC) that points to the current instruction.
+/// The CPU can execute instructions and interact with memory and the stack.
+/// The CPU is generic over the data type used for the registers.
+</span><span class="kw">pub struct </span>CPU&lt;T&gt; {
     registers: [T; REGISTERS_COUNT <span class="kw">as </span>usize],
     status_flags: StatusFlags,
     pc: usize,
@@ -242,24 +278,50 @@
         }
     }
 
-    <span class="kw">pub fn </span>init(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
+    <span class="doccomment">/// Initialize the CPU by clearing the registers and status flags.
+    /// The program counter is set to zero.
+    </span><span class="kw">pub fn </span>init(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
         <span class="self">self</span>.registers = [<span class="number">0</span>; REGISTERS_COUNT <span class="kw">as </span>usize];
         <span class="self">self</span>.status_flags.clear();
         <span class="self">self</span>.pc = <span class="number">0</span>;
     }
 
-    <span class="kw">pub fn </span>pc(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
+    <span class="doccomment">/// Get the program counter (PC) of the CPU.
+    </span><span class="kw">pub fn </span>pc(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
         <span class="self">self</span>.pc
     }
 
-    <span class="kw">pub fn </span>get_register(<span class="kw-2">&amp;</span><span class="self">self</span>, index: u8) -&gt; VmResult&lt;i32&gt; {
+    <span class="doccomment">/// Get the value of a register by index.
+    ///
+    /// # Parameters
+    /// - `index`: The index of the register to get.
+    ///
+    /// # Returns
+    /// The value of the register.
+    ///
+    /// # Errors
+    /// Returns an error if the register index is out of bounds.
+    </span><span class="kw">pub fn </span>get_register(<span class="kw-2">&amp;</span><span class="self">self</span>, index: u8) -&gt; VmResult&lt;i32&gt; {
         <span class="kw">if </span>index <span class="kw">as </span>usize &gt;= REGISTERS_COUNT <span class="kw">as </span>usize {
             <span class="kw">return </span><span class="prelude-val">Err</span>(VmError::InvalidRegister { register: index });
         }
         <span class="prelude-val">Ok</span>(<span class="self">self</span>.registers[index <span class="kw">as </span>usize])
     }
 
-    <span class="kw">pub fn </span>execute_instruction(
+    <span class="doccomment">/// Execute an instruction on the CPU.
+    /// The instruction modifies the registers, status flags, program counter, memory, and stack.
+    ///
+    /// # Parameters
+    /// - `instruction`: The instruction to execute.
+    /// - `memory`: The memory to read from and write to.
+    /// - `stack`: The stack to push to and pop from.
+    ///
+    /// # Errors
+    /// Returns an error if the instruction is invalid or if the HLT instruction is executed.
+    ///
+    /// **Note:** Instructions that use registers did already validate by the decoder.
+    /// The registers are accessed directly without additional validation.
+    </span><span class="kw">pub fn </span>execute_instruction(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
         instruction: Instruction&lt;i32, u32&gt;,
         memory: <span class="kw-2">&amp;mut </span>Memory,

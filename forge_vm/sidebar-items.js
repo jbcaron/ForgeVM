@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["Instruction","VmError"],"struct":["VM"]};
+window.SIDEBAR_ITEMS = {"enum":["Instruction","VmError"],"mod":["vm"],"struct":["VM"]};

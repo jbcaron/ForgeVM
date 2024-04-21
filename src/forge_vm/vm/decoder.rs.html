@@ -199,6 +199,12 @@
 <a href="#197" id="197">197</a>
 <a href="#198" id="198">198</a>
 <a href="#199" id="199">199</a>
+<a href="#200" id="200">200</a>
+<a href="#201" id="201">201</a>
+<a href="#202" id="202">202</a>
+<a href="#203" id="203">203</a>
+<a href="#204" id="204">204</a>
+<a href="#205" id="205">205</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">super</span>::error::{<span class="prelude-ty">Result </span><span class="kw">as </span>VmResult, VmError};
 <span class="kw">use </span><span class="kw">super</span>::hardware_config::REGISTERS_COUNT;
 <span class="kw">use </span><span class="kw">super</span>::instructions::{Instruction, OpCode};
@@ -207,6 +213,8 @@
 <span class="kw">pub struct </span>Decoder;
 
 <span class="doccomment">/// implementation of the Decoder for the 32-bit architecture
+/// **Note:** The validation of the registers was done in the `register_address` function
+/// all the instructions that use registers are validated there
 </span><span class="kw">impl </span>Decoder {
     <span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
         <span class="self">Self
@@ -355,7 +363,11 @@
     }
 }
 
-<span class="kw">fn </span>register_address(register: u8) -&gt; VmResult&lt;u8&gt; {
+<span class="doccomment">/// Check if the register is within the bounds of the available registers
+/// Returns the register if it is valid, otherwise an error
+/// # Parameters
+/// - `register`: The register to check
+</span><span class="kw">fn </span>register_address(register: u8) -&gt; VmResult&lt;u8&gt; {
     <span class="kw">if </span>register &gt;= REGISTERS_COUNT {
         <span class="kw">return </span><span class="prelude-val">Err</span>(VmError::InvalidRegister { register });
     }
