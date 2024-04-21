@@ -9,238 +9,278 @@ use super::error::{Result, VmError};
 pub enum Instruction<D, A> {
     // ==========================================
     // Control Flow Instructions
-    // ==========================================cargo doc --open
+    // ==========================================
     //
     /// No operation.
     /// Performs no action and is typically used to consume a cycle without any effect.
     NOP,
+
     /// Jump to a specified address in the program
-    ///
-    /// # Parameters
-    /// - `address`: The address to jump to
-    JMP { address: A },
+    JMP {
+        /// The address to jump to
+        address: A,
+    },
 
     /// Jump if negative flag is set
-    ///
-    /// # Parameters
-    /// - `address`: The address to jump to if the negative flag is set
-    JMPN { address: A },
+    JMPN {
+        /// The address to jump to if the negative flag is set
+        address: A,
+    },
 
     /// Jump if negative flag is not set
-    ///
-    /// # Parameters
-    /// - `address`: The address to jump to if the negative flag is not set
-    JMPP { address: A },
+    JMPP {
+        /// The address to jump to if the negative flag is not set
+        address: A,
+    },
 
     /// Jump if zero flag is set
-    ///
-    /// # Parameters
-    /// - `address`: The address to jump to if the zero flag is set
-    JMPZ { address: A },
+    JMPZ {
+        /// The address to jump to if the zero flag is set
+        address: A,
+    },
 
     /// Call a function at a specified address in the program
-    /// This operation pushes the current program counter onto the stack and jumps to the specified address.
     ///
-    /// # Parameters
-    /// - `address`: The address of the function to call
-    CALL { address: A },
+    /// This operation pushes the current program counter onto the stack and jumps to the specified address.
+    CALL {
+        /// The address of the function to call
+        address: A,
+    },
 
     /// Return from a function call
-    /// This operation pops the top of the stack and sets the program counter to the popped value.
     ///
+    /// This operation pops the top of the stack and sets the program counter to the popped value.
     RET,
 
     /// Halt the program execution
+    ///
     /// This operation stops the program execution.
     HLT,
 
     /// Moves a specified `value` into the designated `dest` register.
-    ///
-    /// # Parameters
-    /// - `dest`: The register number into which the value will be moved.
-    /// - `value`: The value to store in the register.
-    ///
-    MOV { dest: u8, value: D },
+    MOV {
+        /// The destination register where the value will be stored.
+        dest: u8,
+        /// The value to store in the register.
+        value: D,
+    },
 
     /// Loads a value from the specified `address` in memory into the `dest` register.
-    /// This operation reads the memory at the given address and updates the register with the value found.
     ///
-    /// # Parameters
-    /// - `dest`: The destination register where the memory content will be loaded.
-    /// - `address`: Memory address from which data is to be read.
-    LD { dest: u8, address: A },
+    /// This operation reads the memory at the given address and updates the register with the value found.
+    LD {
+        /// The destination register where the memory content will be loaded.
+        dest: u8,
+        /// Memory address from which data is to be read.
+        address: A,
+    },
 
     /// Stores the value from `src` register into the memory at `address`.
-    /// This operation writes the value in the specified register to the specified address in memory.
     ///
-    /// # Parameters
-    /// - `src`: The source register whose content is to be stored.
-    /// - `address`: Memory address at which the data is to be stored.
-    ST { src: u8, address: A },
+    /// This operation writes the value in the specified register to the specified address in memory.
+    ST {
+        /// The source register whose value will be stored in memory.
+        src: u8,
+        /// Memory address where the data is to be stored.
+        address: A,
+    },
 
     /// Push the value from `reg` register onto the stack.
-    /// This operation pushes the value from the specified register onto the stack.
     ///
-    /// # Parameters
-    /// - `reg`: The register whose value is to be pushed onto the stack.
-    PUSHREG { reg: u8 },
+    /// This operation pushes the value from the specified register onto the stack.
+    PUSHREG {
+        /// The register whose value is to be pushed onto the stack.
+        reg: u8,
+    },
 
     /// Pop the value from the top of the stack into the `reg` register.
-    /// This operation pops the value from the top of the stack and stores it in the specified register.
     ///
-    /// # Parameters
-    /// - `reg`: The register into which the value from the stack is to be popped.
-    POPREG { reg: u8 },
+    /// This operation pops the value from the top of the stack and stores it in the specified register.
+    POPREG {
+        /// The register where the popped value will be stored.
+        reg: u8,
+    },
 
     // ==========================================
     // Arithmetic Instructions
     // ==========================================
     //
     /// Add two registers and store the result in a destination register
+    ///
     /// This operation adds the values in two registers and stores the result in the destination register.
     /// If the result is too large to fit in the register, the overflow flag is set.
     /// If the result is zero, the zero flag is set.
     /// If the result is negative, the negative flag is set.
-    ///
-    /// # Parameters
-    /// - `dest`: The destination register where the result will be stored.
-    /// - `reg1`: The first register containing the value to be added.
-    /// - `reg2`: The second register containing the value to be added.
-    ADD { dest: u8, reg1: u8, reg2: u8 },
+    ADD {
+        /// The destination register where the result will be stored.
+        dest: u8,
+        /// The first register containing the value to be added.
+        reg1: u8,
+        /// The second register containing the value to be added.
+        reg2: u8,
+    },
 
     /// Subtract two registers and store the result in a destination register
+    ///
     /// This operation subtracts the value in the second register from the value in the first register
     /// and stores the result in the destination register.
     /// If the result is too large to fit in the register, the overflow flag is set.
     /// If the result is zero, the zero flag is set.
     /// If the result is negative, the negative flag is set.
-    ///
-    /// # Parameters
-    /// - `dest`: The destination register where the result will be stored.
-    /// - `reg1`: The first register containing the value to be subtracted from.
-    /// - `reg2`: The second register containing the value to be subtracted.
-    SUB { dest: u8, reg1: u8, reg2: u8 },
+    SUB {
+        /// The destination register where the result will be stored.
+        dest: u8,
+        /// The first register containing the value to be subtracted from.
+        reg1: u8,
+        /// The second register containing the value to be subtracted.
+        reg2: u8,
+    },
 
     /// Multiply two registers and store the result in a destination register
+    ///
     /// This operation multiplies the values in two registers and stores the result in the destination register.
     /// If the result is too large to fit in the register, the overflow flag is set.
     /// If the result is zero, the zero flag is set.
     /// If the result is negative, the negative flag is set.
-    ///
-    /// # Parameters
-    /// - `dest`: The destination register where the result will be stored.
-    /// - `reg1`: The first register containing the value to be multiplied.
-    /// - `reg2`: The second register containing the value to be multiplied.
-    MULT { dest: u8, reg1: u8, reg2: u8 },
+    MULT {
+        /// The destination register where the result will be stored.
+        dest: u8,
+        /// The first register containing the value to be multiplied.
+        reg1: u8,
+        /// The second register containing the value to be multiplied.
+        reg2: u8,
+    },
 
     /// Divide two registers and store the result in a destination register
+    ///
     /// This operation divides the value in the first register by the value in the second register
     /// and stores the result in the destination register.
     /// If the result is too large to fit in the register, the overflow flag is set.
     /// If the result is zero, the zero flag is set.
     /// If the result is negative, the negative flag is set.
-    ///
-    /// # Parameters
-    /// - `dest`: The destination register where the result will be stored.
-    /// - `reg1`: The first register containing the dividend.
-    /// - `reg2`: The second register containing the divisor.
-    DIV { dest: u8, reg1: u8, reg2: u8 },
+    DIV {
+        /// The destination register where the result will be stored.
+        dest: u8,
+        /// The first register containing the dividend.
+        reg1: u8,
+        /// The second register containing the divisor.
+        reg2: u8,
+    },
 
     /// Calculate the remainder of dividing two registers and store the result in a destination register
+    ///
     /// This operation calculates the remainder of dividing the value in the first register by the value in the second register
     /// and stores the result in the destination register.
     /// If the result is zero, the zero flag is set.
-    ///
-    /// # Parameters
-    /// - `dest`: The destination register where the result will be stored.
-    /// - `reg1`: The first register containing the dividend.
-    /// - `reg2`: The second register containing the divisor.
-    MOD { dest: u8, reg1: u8, reg2: u8 },
+    MOD {
+        /// The destination register where the result will be stored.
+        dest: u8,
+        /// The first register containing the dividend.
+        reg1: u8,
+        /// The second register containing the divisor.
+        reg2: u8,
+    },
 
     /// Increment a register
+    ///
     /// This operation increments the value in the specified register by one.
     /// If the result is too large to fit in the register, the overflow flag is set.
     /// If the result is zero, the zero flag is set.
     /// If the result is negative, the negative flag is set.
-    ///
-    /// # Parameters
-    /// - `reg`: The register to increment.
-    INC { reg: u8 },
+    INC {
+        /// The register to increment.
+        reg: u8,
+    },
 
     /// Decrement a register
+    ///
     /// This operation decrements the value in the specified register by one.
     /// If the result is too large to fit in the register, the overflow flag is set.
     /// If the result is zero, the zero flag is set.
     /// If the result is negative, the negative flag is set.
-    ///
-    /// # Parameters
-    /// - `reg`: The register to decrement.
-    DEC { reg: u8 },
+    DEC {
+        /// The register to decrement.
+        reg: u8,
+    },
 
     // ==========================================
     // Logical Instructions
     // ==========================================
     //
     /// Logical AND two registers and store the result in a destination register
+    ///
     /// This operation performs a bitwise AND operation on the values in two registers
     /// and stores the result in the destination register.
     /// If the result is zero, the zero flag is set.
     /// If the result is negative, the negative flag is set.
-    ///
-    /// # Parameters
-    /// - `dest`: The destination register where the result will be stored.
-    /// - `reg1`: The first register containing the value to be ANDed.
-    /// - `reg2`: The second register containing the value to be ANDed.
-    AND { dest: u8, reg1: u8, reg2: u8 },
+    AND {
+        /// The destination register where the result will be stored.
+        dest: u8,
+        /// The first register containing the value to be ANDed.
+        reg1: u8,
+        /// The second register containing the value to be ANDed.
+        reg2: u8,
+    },
 
     /// Logical OR two registers and store the result in a destination register
+    ///
     /// This operation performs a bitwise OR operation on the values in two registers
     /// and stores the result in the destination register.
     /// If the result is zero, the zero flag is set.
     /// If the result is negative, the negative flag is set.
-    ///
-    /// # Parameters
-    /// - `dest`: The destination register where the result will be stored.
-    /// - `reg1`: The first register containing the value to be ORed.
-    /// - `reg2`: The second register containing the value to be ORed.
-    OR { dest: u8, reg1: u8, reg2: u8 },
+    OR {
+        /// The destination register where the result will be stored.
+        dest: u8,
+        /// The first register containing the value to be ORed.
+        reg1: u8,
+        /// The second register containing the value to be ORed.
+        reg2: u8,
+    },
 
     /// Logical XOR two registers and store the result in a destination register
+    ///
     /// This operation performs a bitwise XOR operation on the values in two registers
     /// and stores the result in the destination register.
     /// If the result is zero, the zero flag is set.
     /// If the result is negative, the negative flag is set.
-    ///
-    /// # Parameters
-    /// - `dest`: The destination register where the result will be stored.
-    /// - `reg1`: The first register containing the value to be XORed.
-    /// - `reg2`: The second register containing the value to be XORed.
-    XOR { dest: u8, reg1: u8, reg2: u8 },
+    XOR {
+        /// The destination register where the result will be stored.
+        dest: u8,
+        /// The first register containing the value to be XORed.
+        reg1: u8,
+        /// The second register containing the value to be XORed.
+        reg2: u8,
+    },
 
     /// Logical NOT a register and store the result in a destination register
+    ///
     /// This operation performs a bitwise NOT operation on the value in the specified register
     /// and stores the result in the destination register.
     /// If the result is zero, the zero flag is set.
     /// If the result is negative, the negative flag is set.
-    ///
-    /// # Parameters
-    /// - `dest`: The destination register where the result will be stored.
-    /// - `reg`: The register containing the value to be NOTed.
-    NOT { dest: u8, reg: u8 },
+    NOT {
+        /// The destination register where the result will be stored.
+        dest: u8,
+        /// The register containing the value to be NOTed.
+        reg: u8,
+    },
 
     /// Compare two registers
-    /// This operation compares the values in two registers and sets the zero flag if they are equal.
     ///
-    /// # Parameters
-    /// - `reg1`: The first register to compare.
-    /// - `reg2`: The second register to compare.
-    CMP { reg1: u8, reg2: u8 },
+    /// This operation compares the values in two registers and sets the zero flag if they are equal.
+    CMP {
+        /// The first register to compare.
+        reg1: u8,
+        /// The second register to compare.
+        reg2: u8,
+    },
 
     // ==========================================
     // Flag Operations
     // ==========================================
     //
     /// Clear the flags
+    ///
     /// This operation clears all the flags in the status register.
     CLF,
 }

@@ -10,8 +10,12 @@ use super::stack::Stack;
 /// The CPU can execute instructions and interact with memory and the stack.
 /// The CPU is generic over the data type used for the registers.
 pub struct CPU<T> {
+    /// The registers of the CPU.
+    /// ***Note:*** REGISTERS_COUNT is defined in hardware_config.rs
     registers: [T; REGISTERS_COUNT as usize],
+    /// The status flags of the CPU.
     status_flags: StatusFlags,
+    /// The program counter (PC) of the CPU.
     pc: usize,
 }
 
