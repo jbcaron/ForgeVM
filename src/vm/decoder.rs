@@ -14,9 +14,9 @@ impl Decoder {
     pub fn decode_next_instruction(
         &self,
         program: &Program,
-        pc: &mut usize,
+        pc: usize,
     ) -> VmResult<Instruction<i32, u32>> {
-        let program_slice = program.slice_from(*pc);
+        let program_slice = program.slice_from(pc);
 
         // check if the program slice is empty and contains at least the opcode
         if program_slice.is_empty() {
@@ -32,9 +32,6 @@ impl Decoder {
         if program_slice.len() < instruction_len {
             return Err(VmError::InvalidInstruction);
         }
-
-        // increment the program counter by the length of the instruction
-        *pc += instruction_len;
 
         match opcode {
             OpCode::NOP => Ok(Instruction::<i32, u32>::NOP),

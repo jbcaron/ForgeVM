@@ -95,6 +95,39 @@ where
     }
 }
 
+impl<D, A> Instruction<D, A> {
+    pub fn size(&self) -> usize {
+        match self {
+            Instruction::NOP => 1,
+            Instruction::MOV { .. } => 2 + std::mem::size_of::<D>(),
+            Instruction::LD { .. } => 2 + std::mem::size_of::<A>(),
+            Instruction::ST { .. } => 2 + std::mem::size_of::<A>(),
+            Instruction::AND { .. } => 4,
+            Instruction::OR { .. } => 4,
+            Instruction::XOR { .. } => 4,
+            Instruction::NOT { .. } => 3,
+            Instruction::CMP { .. } => 3,
+            Instruction::ADD { .. } => 4,
+            Instruction::SUB { .. } => 4,
+            Instruction::MULT { .. } => 4,
+            Instruction::DIV { .. } => 4,
+            Instruction::MOD { .. } => 4,
+            Instruction::INC { .. } => 2,
+            Instruction::DEC { .. } => 2,
+            Instruction::PUSHREG { .. } => 2,
+            Instruction::POPREG { .. } => 2,
+            Instruction::JMP { .. } => 5,
+            Instruction::JMPN { .. } => 5,
+            Instruction::JMPP { .. } => 5,
+            Instruction::JMPZ { .. } => 5,
+            Instruction::CALL { .. } => 5,
+            Instruction::RET => 1,
+            Instruction::CLF => 1,
+            Instruction::HLT => 1,
+        }
+    }
+}
+
 /// Enumeration of all possible opcodes
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum OpCode {

@@ -8,7 +8,7 @@ pub mod program;
 pub mod stack;
 
 /// Virtual Machine (VM) designed for 32-bit architecture operations.
-/// 
+///
 /// # Generics:
 /// - `T`: Represents the data type for the stack and CPU operations, e.g., `i32`.
 pub struct VM<T> {
@@ -20,7 +20,7 @@ pub struct VM<T> {
 
 /// Implementation specific for 32-bit integers.
 impl VM<i32> {
-	/// Constructs a new instance of the VM.
+    /// Constructs a new instance of the VM.
     ///
     /// # Parameters:
     /// - `stack_capacity`: Maximum number of elements the stack can hold.
@@ -37,7 +37,7 @@ impl VM<i32> {
         }
     }
 
-	/// Runs the VM with a given program.
+    /// Runs the VM with a given program.
     ///
     /// # Parameters:
     /// - `program`: Byte array representing the machine code to execute.
@@ -54,7 +54,7 @@ impl VM<i32> {
         let decoder = decoder::Decoder::new();
 
         loop {
-            let instructions = decoder.decode_next_instruction(&program, self.cpu.pc_mut())?;
+            let instructions = decoder.decode_next_instruction(&program, self.cpu.pc())?;
             self.steps += 1;
             if instructions == instructions::Instruction::<i32, u32>::HLT {
                 break;

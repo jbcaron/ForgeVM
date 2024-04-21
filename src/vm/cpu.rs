@@ -27,8 +27,8 @@ impl CPU<i32> {
         self.pc = 0;
     }
 
-    pub fn pc_mut(&mut self) -> &mut usize {
-        &mut self.pc
+    pub fn pc(&self) -> usize {
+        self.pc
     }
 
     pub fn get_register(&self, index: u8) -> VmResult<i32> {
@@ -196,6 +196,7 @@ impl CPU<i32> {
                 return Err(VmError::Other("HLT instruction executed".to_string()));
             }
         }
+        self.pc += instruction.size();
         Ok(())
     }
 }
