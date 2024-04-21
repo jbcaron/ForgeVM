@@ -13,7 +13,6 @@ impl Decoder {
         Self
     }
 
-
     pub fn decode_next_instruction(
         &self,
         program: &Program,

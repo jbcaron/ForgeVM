@@ -40,13 +40,13 @@ impl CPU<i32> {
     }
 
     /// Get the value of a register by index.
-    /// 
+    ///
     /// # Parameters
     /// - `index`: The index of the register to get.
-    /// 
+    ///
     /// # Returns
     /// The value of the register.
-    /// 
+    ///
     /// # Errors
     /// Returns an error if the register index is out of bounds.
     pub fn get_register(&self, index: u8) -> VmResult<i32> {
@@ -58,15 +58,15 @@ impl CPU<i32> {
 
     /// Execute an instruction on the CPU.
     /// The instruction modifies the registers, status flags, program counter, memory, and stack.
-    /// 
+    ///
     /// # Parameters
     /// - `instruction`: The instruction to execute.
     /// - `memory`: The memory to read from and write to.
     /// - `stack`: The stack to push to and pop from.
-    /// 
+    ///
     /// # Errors
     /// Returns an error if the instruction is invalid or if the HLT instruction is executed.
-    /// 
+    ///
     /// **Note:** Instructions that use registers did already validate by the decoder.
     /// The registers are accessed directly without additional validation.
     pub fn execute_instruction(

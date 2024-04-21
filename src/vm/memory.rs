@@ -13,7 +13,7 @@ pub struct Memory {
 
 impl Memory {
     /// Create a new memory with the specified size.
-    /// 
+    ///
     /// # Parameters
     /// - `size`: The size of the memory in bytes.
     pub fn new(size: usize) -> Self {
@@ -29,13 +29,13 @@ impl Memory {
 
     /// Read a value from memory at the specified address.
     /// The address must be aligned to the size of the type `T`.
-    /// 
+    ///
     /// # Parameters
     /// - `address`: The address to read from.
-    /// 
+    ///
     /// # Returns
     /// The value read from memory.
-    /// 
+    ///
     /// # Errors
     /// Returns an error if the address is out of bounds or not aligned.
     pub fn read<T>(&self, address: usize) -> Result<T>
@@ -59,11 +59,11 @@ impl Memory {
 
     /// Write a value to memory at the specified address.
     /// The address must be aligned to the size of the type `T`.
-    /// 
+    ///
     /// # Parameters
     /// - `address`: The address to write to.
     /// - `value`: The value to write.
-    /// 
+    ///
     /// # Errors
     /// Returns an error if the address is out of bounds or not aligned.
     pub fn write<T>(&mut self, address: usize, value: T) -> Result<()> {

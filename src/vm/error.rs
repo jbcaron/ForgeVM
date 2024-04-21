@@ -20,10 +20,7 @@ pub enum VmError {
     /// # Parameters
     /// - `address`: The address of the memory access.
     /// - `size`: The size of the memory access.
-    MemoryOutOfBounds {
-        address: usize,
-        size: usize,
-    },
+    MemoryOutOfBounds { address: usize, size: usize },
 
     /// Memory access not aligned.
     /// Contains the address and the size of the memory access.
@@ -31,10 +28,7 @@ pub enum VmError {
     /// # Parameters
     /// - `address`: The address of the memory access.
     /// - `size`: The size of the memory access.
-    MemoryNotAligned {
-        address: usize,
-        size: usize,
-    },
+    MemoryNotAligned { address: usize, size: usize },
 
     // ==========================================
     // Stack errors
@@ -57,9 +51,7 @@ pub enum VmError {
     ///
     /// # Parameters
     /// - `opcode`: The opcode that caused the error.
-    InvalidOpcode {
-        opcode: u8,
-    },
+    InvalidOpcode { opcode: u8 },
 
     /// Invalid instruction encountered.
     /// This error is used when an instruction is invalid.
@@ -72,12 +64,10 @@ pub enum VmError {
     //
     /// Invalid register encountered, out of bounds.
     /// Contains the register that caused the error.
-    /// 
+    ///
     /// # Parameters
     /// - `register`: The register that caused the error.
-    InvalidRegister {
-        register: u8,
-    },
+    InvalidRegister { register: u8 },
 
     // ==========================================
     // Arithmetic errors
@@ -92,7 +82,7 @@ pub enum VmError {
     //
     /// Other error.
     /// Contains a description of the error.
-    /// 
+    ///
     /// # Parameters
     /// - `description`: A description of the error.
     Other(String),

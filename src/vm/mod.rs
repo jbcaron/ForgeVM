@@ -28,7 +28,7 @@ impl VM<i32> {
     ///
     /// # Returns:
     /// A new instance of `VM<i32>`
-    /// 
+    ///
     /// # Example:
     /// ```
     /// // Create a new VM with a stack capacity of 1024 elements and a memory size of 1024 bytes.
@@ -53,7 +53,7 @@ impl VM<i32> {
     /// # Returns:
     /// - `Ok(u128)`: Total number of steps executed upon successful completion.
     /// - `Err(VmError)`: Error if an issue occurred during execution.
-    /// 
+    ///
     /// # Example:
     /// ```
     /// use forge_vm::VM;
