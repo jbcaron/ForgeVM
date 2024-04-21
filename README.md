@@ -5,6 +5,7 @@
 [![CI](https://github.com/jbcaron/ForgeVM/actions/workflows/rust.yml/badge.svg)](https://github.com/jbcaron/ForgeVM/actions/workflows/rust.yml)
 ![Github licence](https://img.shields.io/github/license/jbcaron/ForgeVM)
 ![GitHub tag](https://img.shields.io/github/v/tag/jbcaron/ForgeVm)
+[![API Docs](https://img.shields.io/badge/docs-go%20to%20docs-blue)](https://jbcaron.github.io/ForgeVM/)
 
 
 Welcome to ForgeVM, a virtual machine (VM) implemented in Rust, designed to be robust, safe, and efficient. ForgeVM is an educational project that provides a platform for understanding the inner workings of a virtual machine, including its instruction set, memory management, and execution flow.
@@ -27,6 +28,7 @@ The core components include a dynamically sized stack, a configurable memory mod
   - [Arithmetic Operations](#arithmetic-operations)
   - [Stack Operations](#stack-operations)
   - [Control Flow](#control-flow)
+- [Documentation](#documentation)
 - [License](#license)
 
 
@@ -199,6 +201,16 @@ The virtual machine supports a diverse set of operations, ranging from basic dat
   - **Description**: Clears the CPU flags, resetting the state for fresh evaluations.
 - `HLT`:
   - **Description**: Halts the machine, stopping execution.
+
+
+## Documentation
+
+For comprehensive API documentation and code details of ForgeVM, please visit our [online documentation](https://jbcaron.github.io/ForgeVM/).
+
+Our documentation is automatically generated from the source code comments using `cargo doc`. It provides a clear overview of all modules, structs, functions, and traits in ForgeVM. This is an excellent resource for developers looking to understand the internal workings of the project, explore the APIs, or integrate ForgeVM into their own projects.
+
+While the documentation focuses on API details, it is rich with code examples and explanations that are derived directly from the codebase itself, ensuring that the information is always up-to-date and accurate.
+
 
 ## License
 
