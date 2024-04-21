@@ -6,10 +6,13 @@ use super::program::Program;
 pub struct Decoder;
 
 /// implementation of the Decoder for the 32-bit architecture
+/// **Note:** The validation of the registers was done in the `register_address` function
+/// all the instructions that use registers are validated there
 impl Decoder {
     pub fn new() -> Self {
         Self
     }
+
 
     pub fn decode_next_instruction(
         &self,
@@ -154,6 +157,10 @@ impl Decoder {
     }
 }
 
+/// Check if the register is within the bounds of the available registers
+/// Returns the register if it is valid, otherwise an error
+/// # Parameters
+/// - `register`: The register to check
 fn register_address(register: u8) -> VmResult<u8> {
     if register >= REGISTERS_COUNT {
         return Err(VmError::InvalidRegister { register });

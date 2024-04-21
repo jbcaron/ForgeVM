@@ -1,20 +1,43 @@
 use super::error::{Result, VmError};
 
+/// The memory structure used by the VM.
+/// The memory has a fixed size and can store any type.
+/// The memory is byte-addressable.
+/// The memory is cleared to zero when created.
+/// The memory can be read from and written to.
+/// The memory access must be aligned to the size of the type.
+/// The memory access must be within the bounds of the memory.
 pub struct Memory {
     data: Vec<u8>,
 }
 
 impl Memory {
+    /// Create a new memory with the specified size.
+    /// 
+    /// # Parameters
+    /// - `size`: The size of the memory in bytes.
     pub fn new(size: usize) -> Self {
         Memory {
             data: vec![0; size],
         }
     }
 
+    /// Clear the memory by setting all values to zero.
     pub fn clear(&mut self) {
         self.data.iter_mut().for_each(|x| *x = 0);
     }
 
+    /// Read a value from memory at the specified address.
+    /// The address must be aligned to the size of the type `T`.
+    /// 
+    /// # Parameters
+    /// - `address`: The address to read from.
+    /// 
+    /// # Returns
+    /// The value read from memory.
+    /// 
+    /// # Errors
+    /// Returns an error if the address is out of bounds or not aligned.
     pub fn read<T>(&self, address: usize) -> Result<T>
     where
         T: Copy,
@@ -34,6 +57,15 @@ impl Memory {
         Ok(unsafe { *(self.data.as_ptr().add(address) as *const T) })
     }
 
+    /// Write a value to memory at the specified address.
+    /// The address must be aligned to the size of the type `T`.
+    /// 
+    /// # Parameters
+    /// - `address`: The address to write to.
+    /// - `value`: The value to write.
+    /// 
+    /// # Errors
+    /// Returns an error if the address is out of bounds or not aligned.
     pub fn write<T>(&mut self, address: usize, value: T) -> Result<()> {
         if address + std::mem::size_of::<T>() > self.data.len() {
             return Err(VmError::MemoryOutOfBounds {
@@ -54,6 +86,7 @@ impl Memory {
         Ok(())
     }
 
+    /// Get the capacity of the memory.
     pub fn capacity(&self) -> usize {
         self.data.len()
     }

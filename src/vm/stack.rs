@@ -1,5 +1,7 @@
 use super::error::{Result, VmError};
 
+/// The stack structure used by the VM.
+/// The stack has a fixed capacity and can store any type.
 pub struct Stack<T> {
     data: Vec<T>,
     capacity: usize,

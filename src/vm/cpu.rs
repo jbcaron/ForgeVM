@@ -4,6 +4,11 @@ use super::instructions::Instruction;
 use super::memory::Memory;
 use super::stack::Stack;
 
+/// The CPU structure used by the VM.
+/// The CPU has a fixed number of registers and status flags.
+/// The CPU has a program counter (PC) that points to the current instruction.
+/// The CPU can execute instructions and interact with memory and the stack.
+/// The CPU is generic over the data type used for the registers.
 pub struct CPU<T> {
     registers: [T; REGISTERS_COUNT as usize],
     status_flags: StatusFlags,
@@ -21,16 +26,29 @@ impl CPU<i32> {
         }
     }
 
+    /// Initialize the CPU by clearing the registers and status flags.
+    /// The program counter is set to zero.
     pub fn init(&mut self) {
         self.registers = [0; REGISTERS_COUNT as usize];
         self.status_flags.clear();
         self.pc = 0;
     }
 
+    /// Get the program counter (PC) of the CPU.
     pub fn pc(&self) -> usize {
         self.pc
     }
 
+    /// Get the value of a register by index.
+    /// 
+    /// # Parameters
+    /// - `index`: The index of the register to get.
+    /// 
+    /// # Returns
+    /// The value of the register.
+    /// 
+    /// # Errors
+    /// Returns an error if the register index is out of bounds.
     pub fn get_register(&self, index: u8) -> VmResult<i32> {
         if index as usize >= REGISTERS_COUNT as usize {
             return Err(VmError::InvalidRegister { register: index });
@@ -38,6 +56,19 @@ impl CPU<i32> {
         Ok(self.registers[index as usize])
     }
 
+    /// Execute an instruction on the CPU.
+    /// The instruction modifies the registers, status flags, program counter, memory, and stack.
+    /// 
+    /// # Parameters
+    /// - `instruction`: The instruction to execute.
+    /// - `memory`: The memory to read from and write to.
+    /// - `stack`: The stack to push to and pop from.
+    /// 
+    /// # Errors
+    /// Returns an error if the instruction is invalid or if the HLT instruction is executed.
+    /// 
+    /// **Note:** Instructions that use registers did already validate by the decoder.
+    /// The registers are accessed directly without additional validation.
     pub fn execute_instruction(
         &mut self,
         instruction: Instruction<i32, u32>,

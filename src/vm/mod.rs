@@ -28,6 +28,13 @@ impl VM<i32> {
     ///
     /// # Returns:
     /// A new instance of `VM<i32>`
+    /// 
+    /// # Example:
+    /// ```
+    /// // Create a new VM with a stack capacity of 1024 elements and a memory size of 1024 bytes.
+    /// use forge_vm::VM;
+    /// let mut vm = VM::<i32>::new(1024, 1024);
+    /// ```
     pub fn new(stack_capacity: usize, memory_size: usize) -> Self {
         log::debug!("Creating new VM...");
         Self {
@@ -46,6 +53,14 @@ impl VM<i32> {
     /// # Returns:
     /// - `Ok(u128)`: Total number of steps executed upon successful completion.
     /// - `Err(VmError)`: Error if an issue occurred during execution.
+    /// 
+    /// # Example:
+    /// ```
+    /// use forge_vm::VM;
+    /// let mut vm = VM::<i32>::new(1024, 1024); // Create a new VM
+    /// let program = vec![0x00, 0x00, 0xff]; // NOP, NOP, HLT
+    /// assert_eq!(vm.run(&program), Ok(3));
+    /// ```
     pub fn run(&mut self, program: &[u8]) -> Result<u128, error::VmError> {
         log::info!("Running program...");
         self.steps = 0;
