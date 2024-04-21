@@ -1,0 +1,3 @@
+(function() {var implementors = {
+"forge_vm":[["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/convert/trait.TryFrom.html\" title=\"trait core::convert::TryFrom\">TryFrom</a>&lt;<a class=\"primitive\" href=\"https://doc.rust-lang.org/nightly/std/primitive.u8.html\">u8</a>&gt; for <a class=\"enum\" href=\"forge_vm/vm/instructions/enum.OpCode.html\" title=\"enum forge_vm::vm::instructions::OpCode\">OpCode</a>"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

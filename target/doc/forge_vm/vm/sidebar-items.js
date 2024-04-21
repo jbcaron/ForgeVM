@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["cpu","decoder","error","hardware_config","instructions","memory","program","stack"],"struct":["VM"]};
