@@ -1,6 +1,17 @@
 [package]
 name = "forge_vm"
-version = "0.1.0"
+version = "0.0.1"
 edition = "2021"
+authors = ["Charpa"]
+description = "AA virtual machine implemented in Rust"
+repository = "https://github.com/jbcaron/Forge_VM"
+license = "MIT"
+readme = "README.md"
+keywords = ["virtual machine", "vm", "interpreter", "bytecode", "rust"]
+categories = ["development-tools", "virtualization"]
+
+# To ensure the package compiles with both stable Rust and nightly Rust
+resolver = "2"
 
 [dependencies]
+log = "0.4"

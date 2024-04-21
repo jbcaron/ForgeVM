@@ -29,6 +29,7 @@ impl VM<i32> {
     /// # Returns:
     /// A new instance of `VM<i32>`
     pub fn new(stack_capacity: usize, memory_size: usize) -> Self {
+        log::debug!("Creating new VM...");
         Self {
             stack: stack::Stack::<i32>::new(stack_capacity),
             memory: memory::Memory::new(memory_size),
@@ -46,6 +47,7 @@ impl VM<i32> {
     /// - `Ok(u128)`: Total number of steps executed upon successful completion.
     /// - `Err(VmError)`: Error if an issue occurred during execution.
     pub fn run(&mut self, program: &[u8]) -> Result<u128, error::VmError> {
+        log::info!("Running program...");
         self.steps = 0;
         self.cpu.init();
         self.memory.clear();
@@ -56,12 +58,14 @@ impl VM<i32> {
         loop {
             let instructions = decoder.decode_next_instruction(&program, self.cpu.pc())?;
             self.steps += 1;
+            log::debug!("Executing instruction: {:?}", instructions);
             if instructions == instructions::Instruction::<i32, u32>::HLT {
                 break;
             }
             self.cpu
                 .execute_instruction(instructions, &mut self.memory, &mut self.stack)?;
         }
+        log::info!("Program executed successfully in {} steps.", self.steps);
         Ok(self.steps)
     }
 }
